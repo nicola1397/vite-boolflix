@@ -1,10 +1,13 @@
 <script>
 import { store } from "./store.js";
+import { lang } from "./lang.js";
+
 import axios from "axios";
 export default {
   data() {
     return {
       store,
+      lang,
       title: "",
       string: `${store.searchStr}+${this.title}+${store.apiKey}`,
     };
@@ -22,6 +25,15 @@ export default {
           );
         });
     },
+    getFlag(code, index) {
+      const isoCode = lang[code];
+      console.log("codice:" + isoCode + "indice:" + index);
+      if (isoCode) {
+        return `https://flagsapi.com/${isoCode.toUpperCase()}/shiny/64.png`;
+      } else {
+        return `https://flagsapi.com/UG/shiny/64.png`;
+      }
+    },
   },
 };
 </script>
@@ -33,20 +45,22 @@ export default {
       type="search"
       placeholder="Search"
       v-model="title"
-      @keydown="fetch()"
+      @keydown=""
     />
     <button class="btn btn-danger" @click="fetch()">Search</button>
   </div>
 
   <ul>
-    <li v-for="media in store.searchObj">
+    <li v-for="(media, index) in store.searchObj">
       <div class="card">
         <div class="card-header">
           <h2>{{ media.title || media.name }}</h2>
         </div>
         <div class="card-body">
           <h3>{{ media.original_title || media.original_name }}</h3>
-          <h5>{{ media.original_language }}</h5>
+          <span
+            ><img :src="getFlag(media.original_language, index)" alt=""
+          /></span>
           <span>{{ media.vote_average }}</span>
         </div>
       </div>
