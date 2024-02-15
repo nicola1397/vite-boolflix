@@ -44,7 +44,8 @@ export default {
           type="search"
           placeholder="Search"
           v-model="store.title"
-          @keydown=""
+          @keyup.enter="fetch()"
+          @keydown="fetch()"
         />
         <button class="btn btn-danger" @click="fetch()">Search</button>
       </div>
