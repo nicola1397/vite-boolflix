@@ -42,6 +42,7 @@ export default {
       const stars = Math.round(rating / 2);
       return stars;
     },
+    checkPoster() {},
   },
 };
 </script>
@@ -62,10 +63,15 @@ export default {
     <li v-for="(media, index) in store.searchObj">
       <div class="card">
         <img
+          v-if="media.backdrop_path"
           :src="`${store.imgStr}${media.backdrop_path}`"
           class="card-img-top"
           alt="..."
         />
+
+        <div v-else class="titleBackdrop">
+          <h3 class="coverTitle">{{ media.title || media.name }}</h3>
+        </div>
 
         <div class="card-header">
           <h2>{{ media.title || media.name }}</h2>
@@ -101,6 +107,7 @@ li {
   margin: 10px;
   display: inline-block;
   width: calc(100% / 5 - 20px);
+  height: 600px;
 }
 
 .input-group {
@@ -109,5 +116,17 @@ li {
 
 [class~="bi"] {
   color: yellow;
+}
+
+.titleBackdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 169px;
+}
+
+.coverTitle {
+  color: white;
+  text-align: center;
+  line-height: 169px;
 }
 </style>
