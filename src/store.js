@@ -5,4 +5,5 @@ export const store = reactive({
   searchStr: "https://api.themoviedb.org/3/search/multi?query=",
   imgStr: "https://image.tmdb.org/t/p/w300/",
   searchObj: [],
+  title: "",
 });

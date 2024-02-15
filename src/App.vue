@@ -1,6 +1,7 @@
 <script>
 import { store } from "./store.js";
 import { lang } from "./lang.js";
+import AppHeader from "../src/components/AppHeader.vue";
 
 import axios from "axios";
 export default {
@@ -8,23 +9,13 @@ export default {
     return {
       store,
       lang,
-      title: "",
-      string: `${store.searchStr}+${this.title}+${store.apiKey}`,
     };
+  },
+  components: {
+    AppHeader,
   },
 
   methods: {
-    fetch() {
-      axios
-        .get(`${store.searchStr}${this.title}${store.apiKey}`)
-
-        .then((response) => {
-          const allResults = response.data.results;
-          store.searchObj = allResults.filter(
-            (result) => result.media_type != "person"
-          );
-        });
-    },
     getFlag(code, index) {
       const isoCode = lang[code];
       console.log("codice:" + isoCode + "indice:" + index);
@@ -42,23 +33,12 @@ export default {
       const stars = Math.round(rating / 2);
       return stars;
     },
-    checkPoster() {},
   },
 };
 </script>
 
 <template>
-  <div class="input-group">
-    <input
-      class="form-control"
-      type="search"
-      placeholder="Search"
-      v-model="title"
-      @keydown=""
-    />
-    <button class="btn btn-danger" @click="fetch()">Search</button>
-  </div>
-
+  <AppHeader></AppHeader>
   <ul>
     <li v-for="(media, index) in store.searchObj">
       <div class="card">
@@ -108,10 +88,6 @@ li {
   display: inline-block;
   width: calc(100% / 5 - 20px);
   height: 600px;
-}
-
-.input-group {
-  margin: 10px;
 }
 
 [class~="bi"] {
