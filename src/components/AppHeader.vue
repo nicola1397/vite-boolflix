@@ -7,17 +7,20 @@ export default {
       store,
     };
   },
+
   methods: {
     fetch() {
       axios
         .get(`${store.searchStr}${store.title}${store.apiKey}`)
 
         .then((response) => {
+          store.pages = response.data.total_pages;
           const allResults = response.data.results;
           store.searchObj = allResults.filter(
             (result) => result.media_type != "person"
           );
         });
+      store.nextPage = 2;
     },
   },
 };

@@ -8,7 +8,23 @@ export default {
       store,
     };
   },
-  methods: {},
+
+  methods: {
+    fetchMore() {
+      if (store.nextPage <= parseInt(store.pages)) {
+        axios
+          .get(
+            `${store.searchStr}${store.title}${store.apiKey}${store.pageStr}${store.nextPage}`
+          )
+          .then((response) => {
+            const allResults = response.data.results;
+            allResults.filter((result) => result.media_type != "person");
+            store.searchObj = store.searchObj.concat(allResults);
+          });
+        store.nextPage++;
+      }
+    },
+  },
   components: { AppCard },
 };
 </script>
@@ -18,6 +34,15 @@ export default {
     <div class="thumbnail" v-for="media in store.searchObj">
       <AppCard :media="media"></AppCard>
     </div>
+  </div>
+  <div class="showMore">
+    <button
+      v-if="store.nextPage < store.pages"
+      class="btn btn-danger"
+      @click="fetchMore()"
+    >
+      Mostra altri
+    </button>
   </div>
 </template>
 
@@ -32,5 +57,13 @@ export default {
 .thumbnail {
   margin: 10px;
   display: block;
+}
+
+.showMore {
+  text-align: center;
+
+  button {
+    margin: 20px;
+  }
 }
 </style>

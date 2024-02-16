@@ -12,6 +12,7 @@ export default {
       lang,
     };
   },
+
   components: {
     AppHeader,
     AppMain,
