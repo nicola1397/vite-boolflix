@@ -6,7 +6,7 @@ export const store = reactive({
   imgStr: "https://image.tmdb.org/t/p/w342/",
   pageStr: "&page=",
   pages: "",
-  nextPage: 2,
+  nextPage: 1,
   searchObj: [],
   title: "",
 });

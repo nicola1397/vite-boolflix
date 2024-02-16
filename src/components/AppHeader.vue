@@ -11,7 +11,9 @@ export default {
   methods: {
     fetch() {
       axios
-        .get(`${store.searchStr}${store.title}${store.apiKey}`)
+        .get(
+          `${store.searchStr}${store.title}${store.apiKey}${store.pageStr}${store.nextPage}`
+        )
 
         .then((response) => {
           store.pages = response.data.total_pages;
@@ -20,7 +22,7 @@ export default {
             (result) => result.media_type != "person"
           );
         });
-      store.nextPage = 2;
+      store.nextPage = 1;
     },
   },
 };

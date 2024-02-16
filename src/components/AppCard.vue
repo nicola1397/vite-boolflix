@@ -49,11 +49,14 @@ export default {
       </div>
 
       <div class="movie-cardBack">
-        <div class="card-header">
-          <h2>{{ media.title || media.name }}</h2>
+        <h2>{{ media.title || media.name }}</h2>
+        <span class="category">Titolo originale</span>
+
+        <h5>{{ media.original_title || media.original_name }}</h5>
+        <span>Lingua</span>
+        <div>
+          <img :src="getFlag(media.original_language)" alt="" />
         </div>
-        <h3>{{ media.original_title || media.original_name }}</h3>
-        <div><img :src="getFlag(media.original_language)" alt="" /></div>
 
         <span> Voto: </span>
         <span>
@@ -66,6 +69,7 @@ export default {
             "
           ></i
         ></span>
+        <span>Trama</span>
         <div class="overview">
           <p>{{ media.overview }}</p>
         </div>
@@ -90,6 +94,7 @@ export default {
     justify-content: center;
     width: 300px;
     height: 500px;
+    background-color: black;
 
     .movie-cardBack {
       display: none;
@@ -110,7 +115,7 @@ export default {
 }
 
 .movieCard:hover .movie-cardBack {
-  padding: 10px;
+  padding: 20px 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -129,11 +134,13 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 20px;
 }
 
 .coverTitle {
   color: white;
   background-color: transparent;
+  text-align: center;
 }
 
 .overview {
