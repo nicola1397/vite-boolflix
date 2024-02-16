@@ -9,20 +9,27 @@ export default {
   },
 
   methods: {
-    fetch() {
+    fetchMovies() {
       axios
-        .get(
-          `${store.searchStr}${store.title}${store.apiKey}${store.pageStr}${store.nextPage}`
-        )
+        .get(`${store.searchStrMov}${store.title}${store.apiKey}`)
 
         .then((response) => {
-          store.pages = response.data.total_pages;
+          store.pagesMv = response.data.total_pages;
           const allResults = response.data.results;
-          store.searchObj = allResults.filter(
-            (result) => result.media_type != "person"
-          );
+          store.searchMv = allResults;
         });
-      store.nextPage = 1;
+      store.nextPageMv = 1;
+    },
+    fetchTv() {
+      axios
+        .get(`${store.searchStrTv}${store.title}${store.apiKey}`)
+
+        .then((response) => {
+          store.pagesTv = response.data.total_pages;
+          const allResults = response.data.results;
+          store.searchTv = allResults;
+        });
+      store.nextPageTv = 1;
     },
   },
 };
@@ -49,10 +56,12 @@ export default {
           type="search"
           placeholder="Search"
           v-model="store.title"
-          @keyup.enter="fetch()"
-          @keydown="fetch()"
+          @keyup.enter="fetchMovies(), fetchTv()"
+          @keyup="fetchMovies(), fetchTv()"
         />
-        <button class="btn btn-danger" @click="fetch()">Search</button>
+        <button class="btn btn-danger" @click="fetchMovies(), fetchTv()">
+          Search
+        </button>
       </div>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">

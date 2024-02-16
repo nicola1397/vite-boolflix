@@ -10,18 +10,33 @@ export default {
   },
 
   methods: {
-    fetchMore() {
-      if (store.nextPage <= parseInt(store.pages)) {
+    fetchMoreTv() {
+      console.log("fetching more series");
+      if (store.nextPageTv <= parseInt(store.pagesTv)) {
         axios
           .get(
-            `${store.searchStr}${store.title}${store.apiKey}${store.pageStr}${store.nextPage}`
+            `${store.searchStrTv}${store.title}${store.apiKey}${store.pageStr}${store.nextPageTv}`
           )
           .then((response) => {
-            const allResults = response.data.results;
-            allResults.filter((result) => result.media_type != "person");
-            store.searchObj = store.searchObj.concat(allResults);
+            const moreTv = response.data.results;
+            store.searchTv = store.searchTv.concat(moreTv);
           });
-        store.nextPage++;
+        store.nextPageTv++;
+      }
+    },
+    fetchMoreMv() {
+      console.log("fetching more movies");
+
+      if (store.nextPageMv < parseInt(store.pagesMv)) {
+        axios
+          .get(
+            `${store.searchStrMov}${store.title}${store.pageStr}${store.nextPageMv}${store.apiKey}`
+          )
+          .then((response) => {
+            const moreMv = response.data.results;
+            store.searchMv = store.searchMv.concat(moreMv);
+          });
+        store.nextPageMv++;
       }
     },
   },
@@ -30,16 +45,34 @@ export default {
 </script>
 
 <template>
+  <h2>FILM</h2>
+
   <div class="mainWrapper">
-    <div class="thumbnail" v-for="media in store.searchObj">
-      <AppCard :media="media"></AppCard>
+    <div class="thumbnail" v-for="movie in store.searchMv">
+      <AppCard :media="movie"></AppCard>
     </div>
   </div>
   <div class="showMore">
     <button
-      v-if="store.nextPage < store.pages"
+      v-if="store.nextPageMv < store.pagesMv"
       class="btn btn-danger"
-      @click="fetchMore()"
+      @click="fetchMoreMv()"
+    >
+      Mostra altri
+    </button>
+  </div>
+  <h2>SERIE TV</h2>
+
+  <div class="mainWrapper">
+    <div class="thumbnail" v-for="series in store.searchTv">
+      <AppCard :media="series"></AppCard>
+    </div>
+  </div>
+  <div class="showMore">
+    <button
+      v-if="store.nextPageTv < store.pagesTv"
+      class="btn btn-danger"
+      @click="fetchMoreTv()"
     >
       Mostra altri
     </button>
@@ -47,6 +80,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+h2 {
+  color: white;
+  text-align: center;
+}
 .mainWrapper {
   margin: auto;
   width: 90vw;

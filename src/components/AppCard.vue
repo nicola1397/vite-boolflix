@@ -23,10 +23,6 @@ export default {
       }
     },
     starRating(rating) {
-      // ROUND TO HALF STAR
-      // const stars = Math.round(((rating / 2) * 0.5) / 0.5);
-
-      // ROUND TO FULL
       const stars = Math.round(rating / 2);
       return stars;
     },
@@ -147,5 +143,13 @@ export default {
   margin-top: 10px;
   height: 100%;
   overflow-y: auto;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
