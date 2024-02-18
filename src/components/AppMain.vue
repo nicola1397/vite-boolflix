@@ -1,11 +1,14 @@
 <script>
 import { store } from "../store.js";
+import { data } from "../data.js";
 import AppCard from "./AppCard.vue";
 import axios from "axios";
+
 export default {
   data() {
     return {
       store,
+      data,
     };
   },
 
@@ -39,6 +42,30 @@ export default {
         store.nextPageMv++;
       }
     },
+    // PER MODALE
+    setId(id, type) {
+      console.log(type);
+      data.mediaType = type;
+      data.id = id;
+      data.isShown = true;
+    },
+
+    fetchData() {
+      console.log("Fetching Data");
+
+      axios
+        .get(`${data.searchDetails}${data.mediaType}/${data.id}${data.apiKey}`)
+        .then((response) => {
+          data.details = response.data;
+        });
+      axios
+        .get(
+          `${data.searchDetails}${data.mediaType}/${data.id}/credits${data.apiKey}`
+        )
+        .then((response) => {
+          data.credits = response.data;
+        });
+    },
   },
   components: { AppCard },
 };
@@ -52,7 +79,11 @@ export default {
       <h3 class="missing">Nessun film trovato.</h3>
     </div>
     <div v-else class="mainWrapper">
-      <div class="thumbnail" v-for="movie in store.searchMv">
+      <div
+        class="thumbnail"
+        v-for="movie in store.searchMv"
+        @click="setId(movie.id, `movie`), fetchData()"
+      >
         <AppCard :media="movie"></AppCard>
       </div>
     </div>
@@ -73,7 +104,11 @@ export default {
       <h3 class="missing">Nessuna serie trovata.</h3>
     </div>
     <div class="mainWrapper">
-      <div class="thumbnail" v-for="series in store.searchTv">
+      <div
+        class="thumbnail"
+        v-for="series in store.searchTv"
+        @click="setId(series.id, `tv`), fetchData()"
+      >
         <AppCard :media="series"></AppCard>
       </div>
     </div>

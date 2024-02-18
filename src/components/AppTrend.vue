@@ -1,5 +1,7 @@
 <script>
 import { store } from "../store.js";
+import { data } from "../data.js";
+
 import axios from "axios";
 import AppCard from "./AppCard.vue";
 
@@ -7,6 +9,7 @@ export default {
   data() {
     return {
       store,
+      data,
       isDown: false,
       startX: "",
       scrollLeft: "",
@@ -47,6 +50,30 @@ export default {
       const walk = x - this.startX;
       this.$refs[ref].scrollLeft -= walk * 0.03;
     },
+    // PER MODALE
+    setId(id, type) {
+      console.log(type);
+      data.mediaType = type;
+      data.id = id;
+      data.isShown = true;
+    },
+
+    fetchData() {
+      console.log("Fetching Data");
+
+      axios
+        .get(`${data.searchDetails}${data.mediaType}/${data.id}${data.apiKey}`)
+        .then((response) => {
+          data.details = response.data;
+        });
+      axios
+        .get(
+          `${data.searchDetails}${data.mediaType}/${data.id}/credits${data.apiKey}`
+        )
+        .then((response) => {
+          data.credits = response.data;
+        });
+    },
   },
   created() {
     this.fetchTrendingMv(), this.fetchTrendingTv();
@@ -66,7 +93,11 @@ export default {
       @mouseup="this.isDown = false"
       @mousemove="mousemove($event, ref1)"
     >
-      <div class="thumbnail" v-for="media in store.trendingMv">
+      <div
+        class="thumbnail"
+        v-for="media in store.trendingMv"
+        @click="setId(media.id, `movie`), fetchData()"
+      >
         <AppCard :media="media"></AppCard>
       </div>
     </div>
@@ -82,7 +113,11 @@ export default {
       @mouseup="this.isDown = false"
       @mousemove="mousemove($event, ref2)"
     >
-      <div class="thumbnail" v-for="media in store.trendingTv">
+      <div
+        class="thumbnail"
+        v-for="media in store.trendingTv"
+        @click="setId(media.id, `tv`), fetchData()"
+      >
         <AppCard :media="media"></AppCard>
       </div>
     </div>

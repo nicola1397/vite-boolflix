@@ -100,7 +100,7 @@ export default {
             @keyup.enter="fetchMovies(), fetchTv()"
             @keyup="fetchMovies(), fetchTv()"
           />
-          <button class="btn btn-danger" @click="fetchMovies(), fetchTv()">
+          <button class="btn btn-danger z-0" @click="fetchMovies(), fetchTv()">
             Search
           </button>
         </div>
