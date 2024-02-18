@@ -45,37 +45,43 @@ export default {
 </script>
 
 <template>
-  <h2>FILM</h2>
+  <!-- SEZIONE FILM -->
+  <div v-if="store.searchType == `home` || store.searchType == `movie`">
+    <h2>FILM</h2>
 
-  <div class="mainWrapper">
-    <div class="thumbnail" v-for="movie in store.searchMv">
-      <AppCard :media="movie"></AppCard>
+    <div class="mainWrapper">
+      <div class="thumbnail" v-for="movie in store.searchMv">
+        <AppCard :media="movie"></AppCard>
+      </div>
+    </div>
+    <div class="showMore">
+      <button
+        v-if="store.nextPageMv < store.pagesMv"
+        class="btn btn-danger"
+        @click="fetchMoreMv()"
+      >
+        Mostra altri
+      </button>
     </div>
   </div>
-  <div class="showMore">
-    <button
-      v-if="store.nextPageMv < store.pagesMv"
-      class="btn btn-danger"
-      @click="fetchMoreMv()"
-    >
-      Mostra altri
-    </button>
-  </div>
-  <h2>SERIE TV</h2>
+  <!-- SEZIONE SERIE TV -->
+  <div v-if="store.searchType == `home` || store.searchType == `tv`">
+    <h2>SERIE TV</h2>
 
-  <div class="mainWrapper">
-    <div class="thumbnail" v-for="series in store.searchTv">
-      <AppCard :media="series"></AppCard>
+    <div class="mainWrapper">
+      <div class="thumbnail" v-for="series in store.searchTv">
+        <AppCard :media="series"></AppCard>
+      </div>
     </div>
-  </div>
-  <div class="showMore">
-    <button
-      v-if="store.nextPageTv < store.pagesTv"
-      class="btn btn-danger"
-      @click="fetchMoreTv()"
-    >
-      Mostra altri
-    </button>
+    <div class="showMore">
+      <button
+        v-if="store.nextPageTv < store.pagesTv"
+        class="btn btn-danger"
+        @click="fetchMoreTv()"
+      >
+        Mostra altri
+      </button>
+    </div>
   </div>
 </template>
 

@@ -1,6 +1,4 @@
-import { reactive } from "vue";
-
-export const lang = reactive({
+export const lang = {
   aa: "dj",
   af: "za",
   ak: "gh",
@@ -134,4 +132,4 @@ export const lang = reactive({
   yo: "yo",
   zu: "za",
   sh: "rs",
-});
+};

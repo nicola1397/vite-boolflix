@@ -55,31 +55,36 @@ export default {
 </script>
 
 <template>
-  <h2>FILM DI TENDENZA</h2>
-
-  <div
-    class="mainWrapper"
-    :ref="ref1"
-    @mousedown="mousedown($event, ref1)"
-    @mouseleave="this.isDown = false"
-    @mouseup="this.isDown = false"
-    @mousemove="mousemove($event, ref1)"
-  >
-    <div class="thumbnail" v-for="media in store.trendingMv">
-      <AppCard :media="media"></AppCard>
+  <!-- SEZIONE FILM -->
+  <div v-if="store.searchType == `home` || store.searchType == `movie`">
+    <h2>FILM DI TENDENZA</h2>
+    <div
+      class="mainWrapper"
+      :ref="ref1"
+      @mousedown="mousedown($event, ref1)"
+      @mouseleave="this.isDown = false"
+      @mouseup="this.isDown = false"
+      @mousemove="mousemove($event, ref1)"
+    >
+      <div class="thumbnail" v-for="media in store.trendingMv">
+        <AppCard :media="media"></AppCard>
+      </div>
     </div>
   </div>
-  <h2>SERIE DI TENDENZA</h2>
-  <div
-    class="mainWrapper"
-    :ref="ref2"
-    @mousedown="mousedown($event, ref2)"
-    @mouseleave="this.isDown = false"
-    @mouseup="this.isDown = false"
-    @mousemove="mousemove($event, ref2)"
-  >
-    <div class="thumbnail" v-for="media in store.trendingTv">
-      <AppCard :media="media"></AppCard>
+  <!-- SEZIONE SERIE -->
+  <div v-if="store.searchType == `home` || store.searchType == `tv`">
+    <h2>SERIE DI TENDENZA</h2>
+    <div
+      class="mainWrapper"
+      :ref="ref2"
+      @mousedown="mousedown($event, ref2)"
+      @mouseleave="this.isDown = false"
+      @mouseup="this.isDown = false"
+      @mousemove="mousemove($event, ref2)"
+    >
+      <div class="thumbnail" v-for="media in store.trendingTv">
+        <AppCard :media="media"></AppCard>
+      </div>
     </div>
   </div>
 </template>

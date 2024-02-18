@@ -16,9 +16,5 @@ export const store = reactive({
   trendingMv: [],
   trendingTv: [],
   title: "",
-  searchType: {
-    1: "home",
-    2: "tv",
-    3: "movie",
-  },
+  searchType: "home",
 });
