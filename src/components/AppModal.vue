@@ -106,7 +106,7 @@ export default {
                 {{ data.details.release_date || data.details.first_air_date }}
               </h5>
             </div>
-            <div v-if="data.details.adult">
+            <div>
               <h4>Contenuti per adulti:</h4>
               <h5 class="mt-4" v-if="data.details.adult">Si</h5>
               <h5 class="mt-4" v-else>No</h5>
