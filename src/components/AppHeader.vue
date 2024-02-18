@@ -7,7 +7,6 @@ export default {
       store,
     };
   },
-  created() {},
 
   methods: {
     resetPage() {
@@ -23,7 +22,7 @@ export default {
           const allResults = response.data.results;
           store.searchMv = allResults;
         });
-      store.nextPageMv = 1;
+      store.nextPageMv = 2;
     },
     fetchTv() {
       axios
@@ -34,7 +33,7 @@ export default {
           const allResults = response.data.results;
           store.searchTv = allResults;
         });
-      store.nextPageTv = 1;
+      store.nextPageTv = 2;
     },
     searchType(element) {
       console.log(element.id);

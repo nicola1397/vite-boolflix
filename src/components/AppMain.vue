@@ -48,8 +48,10 @@ export default {
   <!-- SEZIONE FILM -->
   <div v-if="store.searchType == `home` || store.searchType == `movie`">
     <h2>FILM</h2>
-
-    <div class="mainWrapper">
+    <div v-if="store.searchMv.length == 0">
+      <h3 class="missing">Nessun film trovato.</h3>
+    </div>
+    <div v-else class="mainWrapper">
       <div class="thumbnail" v-for="movie in store.searchMv">
         <AppCard :media="movie"></AppCard>
       </div>
@@ -67,7 +69,9 @@ export default {
   <!-- SEZIONE SERIE TV -->
   <div v-if="store.searchType == `home` || store.searchType == `tv`">
     <h2>SERIE TV</h2>
-
+    <div v-if="store.searchTv.length == 0">
+      <h3 class="missing">Nessuna serie trovata.</h3>
+    </div>
     <div class="mainWrapper">
       <div class="thumbnail" v-for="series in store.searchTv">
         <AppCard :media="series"></AppCard>
@@ -108,5 +112,11 @@ h2 {
   button {
     margin: 20px;
   }
+}
+
+.missing {
+  color: grey;
+  text-align: center;
+  font-weight: lighter;
 }
 </style>
